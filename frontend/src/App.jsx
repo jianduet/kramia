@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Cotizaciones from "./pages/Cotizaciones";
 import PrivateRoute from "./components/PrivateRoute";
 
 import { useAuthStore } from "./store/authStore";
@@ -20,7 +21,7 @@ function App() {
           const user = await getProfile();
           setUser(user);
         } catch (error) {
-          logout(); // token inválido
+          logout();
         }
       }
     };
@@ -31,13 +32,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {}
         <Route path="/" element={<Login />} />
 
+        {}
         <Route
           path="/dashboard"
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/cotizaciones"
+          element={
+            <PrivateRoute>
+              <Cotizaciones />
             </PrivateRoute>
           }
         />
