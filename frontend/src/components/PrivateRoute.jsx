@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "../services/authService";
+import { useAuthStore } from "../store/authStore";
 
 export default function PrivateRoute({ children }) {
-  const token = getToken();
+  const token = useAuthStore((state) => state.token);
 
   if (!token) {
     return <Navigate to="/" />;

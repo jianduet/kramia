@@ -1,23 +1,26 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const setToken = useAuthStore((state) => state.setToken);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      await login(email, password);
-      navigate("/dashboard"); // redirige después del login
-    } catch (err) {
-      setError("Correo o contraseña incorrectos");
-    }
-  };
+  try {
+    const data = await login(email, password); 
+    setToken(data.access_token);              
+    navigate("/dashboard");
+  } catch (err) {
+    setError("Correo o contraseña incorrectos");
+  }
+};
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
